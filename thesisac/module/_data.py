@@ -139,20 +139,20 @@ class ACDataModule(pl.LightningDataModule):
 
    def prepare_train_data(self):
       dataset = self.prepare_file_data(self.train_files)
-      return self.prepare_base_data(dataset, self.train_mode, self.in_memory, True)
+      self.train_data =  self.prepare_base_data(dataset, self.train_mode, self.in_memory, True)
 
    def prepare_validate_data(self):
       dataset = self.prepare_file_data(self.validate_files)
-      return self.prepare_base_data(dataset, self.validate_mode, False, False)
+      self.validate_data = self.prepare_base_data(dataset, self.validate_mode, False, False)
    
    def prepare_test_data(self):
       dataset = self.prepare_file_data(self.test_files)
-      return self.prepare_base_data(dataset, self.test_mode, False, False) # doesnt need to be in memory
+      self.test_data = self.prepare_base_data(dataset, self.test_mode, False, False) # doesnt need to be in memory
 
    def prepare_data(self):
-      self.train_data = self.prepare_train_data()
-      self.validate_data = self.prepare_validate_data()
-      self.test_data = self.prepare_test_data() 
+      self.prepare_train_data()
+      self.prepare_validate_data()
+      self.prepare_test_data() 
 
    def train_dataloader(self):
       if self.in_memory:

@@ -20,7 +20,7 @@ metrics:
 dataset:
 
   env_id : thesis/MNIST-v0
-  path: ${oc.env:HOME}/.data/${dataset.env_id}/UniformLarge/         # load data from disk
+  path: ${oc.env:HOME}/.data/${dataset.env_id}/Uniform/         # load data from disk
   
   # env_kwargs : ${dataset.environment.spec.kwargs}                 # in the absence of path, use these to get live data.
   # policy : gymu.policy.Uniform

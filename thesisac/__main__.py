@@ -20,7 +20,6 @@ import wandb
 from omegaconf import OmegaConf
 from omegaconf.listconfig import ListConfig
 from hydra.utils import instantiate
-from pytorch_lightning import Trainer
 from thesisac import configure_environment, ACDataModule, ACLightningModule
 
 # REGISTER RESOLVERS

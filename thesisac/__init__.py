@@ -7,5 +7,5 @@ __author__ = "Benedict Wilkins"
 __email__ = "benrjw@gmail.com"
 __status__ = "Development"
 
-from ._logging import Log
+from .utils import *
 from .module import * 
