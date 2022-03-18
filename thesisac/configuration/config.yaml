@@ -1,0 +1,58 @@
+model: 
+  _target_: thesisac.module.MLPClassifier
+  input_shape: ${merge:${dataset.window_size},${environment.observation_space.shape}}
+  output_shape: ${environment.action_space.n}
+  hidden_shape: 512
+  layers : 3
+  
+criterion: 
+  _target_: torch.nn.BCEWithLogitsLoss
+
+optimiser:
+  _target_: torch.optim.Adam
+  lr: 0.0005
+
+environment: ${environment:${dataset}}
+
+metrics:
+  - _target_ : torch.nn.L1Loss
+
+dataset:
+
+  env_id : thesis/MNIST-v0
+  path: ${oc.env:HOME}/.data/${dataset.env_id}/UniformLarge/         # load data from disk
+  
+  # env_kwargs : ${dataset.environment.spec.kwargs}                 # in the absence of path, use these to get live data.
+  # policy : gymu.policy.Uniform
+  # policy_kwargs : {}
+
+  in_memory: true
+  batch_size: 512
+  num_workers: 0
+  window_size: 2                          
+  train_mode: ['state', 'action']
+
+  kaggle: # download from kaggle?
+    urls: []                                                       
+    force : false
+
+trainer:
+  _target_: pytorch_lightning.Trainer
+  gpus: 1
+  max_epochs: 100
+  min_epochs: 100
+  check_val_every_n_epoch: 10
+  log_every_n_steps: 10
+  logger: 
+    _target_: pytorch_lightning.loggers.WandbLogger
+    project: thesis-action-classification
+    log_model: all
+    mode: online
+
+
+    
+
+
+
+
+    
